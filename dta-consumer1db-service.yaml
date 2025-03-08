@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dta-consumer1db-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7071
+      targetPort: 7071
+  selector:
+    type: consumer1db-backend

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dta-producer-deployment
+  labels:
+    type: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     type: producer-backend
+  template:
+    metadata:
+      name: producer-pod
+      labels:
+        apps: myapp
+        type: producer-backend
+    spec:
+      containers:
+        - name: producer-container
+          image: pardha1024/dta-producer
+          ports:
+            - containerPort: 8080
+        
