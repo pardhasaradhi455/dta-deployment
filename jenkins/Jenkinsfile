@@ -3,54 +3,44 @@ pipeline{
     stages{
         stage("Deploy Zookeeper"){
             steps{
-                bat"""
-                kubectl create -f dta-zookeeper-service.yaml
-                timeout 10
-                kubectl create -f dta-zookeeper-pod.yaml
-                timeout 420
-                """
+                bat "kubectl create -f dta-zookeeper-service.yaml"
+                sleep 10
+                bat "kubectl create -f dta-zookeeper-pod.yaml"
+                sleep 360
             }
         }
         stage("Deploy Kafka"){
             steps{
-                bat"""
-                kubectl create -f dta-kafka-service.yaml
-                timeout 10
-                kubectl create -f dta-kafka-pod.yaml
-                timeout 420
-                kubectl exec --stdin --tty dta-kafka-pod -- /bin/bash -c "opt/kafka/bin/kafka-topics.sh --create --topic orders --partitions 5 --bootstrap-server dta-kafka-service:9093"
-                timeout 10
-                """
+                bat "kubectl create -f dta-kafka-service.yaml"
+                sleep 10
+                bat "kubectl create -f dta-kafka-pod.yaml"
+                sleep 360
+                bat "kubectl exec --stdin --tty dta-kafka-pod -- /bin/bash -c \"opt/kafka/bin/kafka-topics.sh --create --topic orders --partitions 5 --bootstrap-server dta-kafka-service:9093\""
+                sleep 10
             }
         }
         stage("Deploy BadgerDB1"){
             steps{
-                bat"""
-                kubectl create -f dta-consumer1db-service.yaml
-                timeout 10
-                kubectl create -f dta-consumer1db-deployment.yaml
-                timeout 300
-                """
+                bat "kubectl create -f dta-consumer1db-service.yaml"
+                sleep 10
+                bat "kubectl create -f dta-consumer1db-deployment.yaml"
+                sleep 360
             }
         }
         stage("Deploy Consumer1"){
             steps{
-                bat"""
-                kubectl create -f dta-consumer1-service.yaml
-                timeout 10
-                kubectl create -f dta-consumer1-deployment.yaml
-                timeout 300
-                """
+                bat "kubectl create -f dta-consumer1-service.yaml"
+                sleep 10
+                bat "kubectl create -f dta-consumer1-deployment.yaml"
+                sleep 360
             }
         }
         stage("Deploy Producer"){
             steps{
-                bat"""
-                kubectl create -f dta-producer-service.yaml
-                timeout 10
-                kubectl create -f dta-producer-deployment.yaml
-                timeout 300
-                """
+                bat "kubectl create -f dta-producer-service.yaml"
+                sleep 10
+                bat "kubectl create -f dta-producer-deployment.yaml"
+                sleep 360
             }
         }
     }
