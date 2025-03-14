@@ -43,5 +43,10 @@ pipeline{
                 sleep 360
             }
         }
+        stage("Clean UP"){
+            steps{
+                deleteDir()
+            }
+        }
     }
 }
