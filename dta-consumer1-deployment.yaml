@@ -5,7 +5,7 @@ metadata:
   labels:
     type: consumer1-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
      type: consumer1-backend
