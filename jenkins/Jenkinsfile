@@ -6,7 +6,7 @@ pipeline{
                 bat "kubectl create -f dta-zookeeper-service.yaml"
                 sleep 10
                 bat "kubectl create -f dta-zookeeper-pod.yaml"
-                sleep 50
+                sleep 120
             }
         }
         stage("Deploy Kafka"){
@@ -14,7 +14,7 @@ pipeline{
                 bat "kubectl create -f dta-kafka-service.yaml"
                 sleep 10
                 bat "kubectl create -f dta-kafka-pod.yaml"
-                sleep 50
+                sleep 120
                 bat "kubectl exec --stdin --tty dta-kafka-pod -- /bin/bash -c \"opt/kafka/bin/kafka-topics.sh --create --topic orders --partitions 5 --bootstrap-server dta-kafka-service:9093\""
                 sleep 10
             }
@@ -24,7 +24,7 @@ pipeline{
                 bat "kubectl create -f dta-consumer1db-service.yaml"
                 sleep 10
                 bat "kubectl create -f dta-consumer1db-deployment.yaml"
-                sleep 50
+                sleep 60
             }
         }
         stage("Deploy Consumer1"){
@@ -32,7 +32,7 @@ pipeline{
                 bat "kubectl create -f dta-consumer1-service.yaml"
                 sleep 10
                 bat "kubectl create -f dta-consumer1-deployment.yaml"
-                sleep 50
+                sleep 60
             }
         }
         stage("Deploy Producer"){
@@ -40,7 +40,6 @@ pipeline{
                 bat "kubectl create -f dta-producer-service.yaml"
                 sleep 10
                 bat "kubectl create -f dta-producer-deployment.yaml"
-                sleep 50
             }
         }
         stage("Clean UP"){
